@@ -1,0 +1,10 @@
+.hoverDisplayItem {
+    display: block;
+    border: 1px solid #f4e2d4;
+    background-color: lightgoldenrodyellow;
+    padding: 10px 10px;
+    border-radius: 3px;
+    color: saddlebrown;
+    font-weight: 800;
+    margin: 10px 0;
+}
