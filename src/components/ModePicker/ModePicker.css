@@ -1,0 +1,53 @@
+* {
+    padding: 0;
+    margin: 0;
+}
+
+form {
+    display: flex;
+}
+
+.selectWrapper {
+    height: 40px;
+    width: 70%;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 1em;
+}
+
+.selectWrapper:after {
+    content: "";
+    position: absolute;
+    right: 3%;
+    top: 16px;
+    z-index: 1;
+    border-style: solid;
+    border-width: 5px 10px 0 10px;
+    border-color: black transparent transparent transparent;
+    pointer-events:none;
+}
+
+.modePicker {
+    height: 40px;
+    width: 100%;
+    padding: 5px 15px;
+    color: #616263;
+    border: 1px solid black;
+    outline: none;
+    font-size: 16px;
+    appearance: none;
+}
+
+.btn-submit {
+    width: 30%;
+    color: #fff;
+    display: block;
+    padding: 15px;
+    text-transform: uppercase;
+    border: none;
+    border-radius: 3px;
+    height: 40px;
+    margin-left: 5px;
+    font-weight: bold;
+    background-color: cornflowerblue;
+}
