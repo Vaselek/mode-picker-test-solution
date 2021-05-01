@@ -3,7 +3,7 @@ import './HoverDisplayItem.css';
 
 const HoverDisplayItem = ({ row, col }) => {
   return (
-    <div className='hoverDisplayItem'>
+    <div role='listitem' className='hoverDisplayItem'>
       { `row ${row} col ${col}` }
     </div>
   );
