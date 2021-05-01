@@ -6,11 +6,12 @@ import HoverDisplay from "../HoverDisplay/HoverDisplay";
 import './PlaygroundWrapper.css';
 import {useErrorHandler} from "react-error-boundary";
 import {nanoid} from 'nanoid';
+import Loading from "../Loading/Loading";
 
 
 const PlaygroundWrapper = () => {
 
-  const [field, setField] = useState(5);
+  const [field, setField] = useState(null);
   const [cells, setCells] = useState([]);
   const [hoveredCells, setHoveredCells] = useState([]);
   const [error, setError] = useState(null);
@@ -45,31 +46,31 @@ const PlaygroundWrapper = () => {
   }, [fetchField]);
 
 
-  const changeCellColor = (id) => {
+  const changeCellColor = (index) => {
     let newCells = [...cells];
-    newCells[id] = newCells[id] === 0 ? 1 : 0;
+    newCells[index] = newCells[index] === 0 ? 1 : 0;
     setCells(newCells);
-    updateHoveredCells(id);
+    updateHoveredCells(index);
   };
   
-  const updateHoveredCells = (id) => {
+  const updateHoveredCells = (index) => {
     let newHoveredCells = [...hoveredCells];
     const uniqueId = nanoid();
-    newHoveredCells.push({uniqueId, id});
+    newHoveredCells.push({uniqueId, index});
     setHoveredCells(newHoveredCells);
   };
 
   const handleFormSubmit = async (mode) => {
+    console.log('sjlfjsljdfs--------------------sjdljlfjsljdlfdjlj---------------', mode)
     updateCells();
     await fetchField(mode);
   };
-
 
   return (
     <div className='playgroundWrapper'>
       <div className='mainSection'>
         <ModePicker handleFormSubmit={handleFormSubmit}/>
-        <Playground cells={cells} changeCellColor={changeCellColor} field={field}/>
+        { field ? <Playground cells={cells} changeCellColor={changeCellColor} field={field}/> : <Loading />  }
       </div>
       <HoverDisplay field={field} hoveredCells={hoveredCells} />
     </div>
