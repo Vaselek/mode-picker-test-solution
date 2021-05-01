@@ -1,10 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useCallback} from 'react';
 import ModePicker from "../ModePicker/ModePicker";
 import Playground from "../Playground/Playground";
 import { get } from '../../api/httpRequests';
 import HoverDisplay from "../HoverDisplay/HoverDisplay";
 import './PlaygroundWrapper.css';
 import {useErrorHandler} from "react-error-boundary";
+import {nanoid} from 'nanoid';
 
 
 const PlaygroundWrapper = () => {
@@ -18,14 +19,31 @@ const PlaygroundWrapper = () => {
 
   if (error) handleError(error);
 
-  useEffect(async () => {
-    updateCells();
+  const updateCells = useCallback(() => {
+    const newCells = new Array(field*field).fill(0);
+    setCells(newCells);
+    setHoveredCells([]);
   }, [field]);
 
-  useEffect(async () => {
-    await fetchField();
-    updateCells();
+  const fetchField = useCallback(async(mode='easyMode') => {
+    const response = await get();
+    if (response.isSuccess) {
+      const newField = response.payload.data[mode].field;
+      setField(newField);
+      setError(null);
+    } else {
+      setError(response.payload)
+    }
   }, []);
+
+  useEffect(() => {
+    updateCells();
+  }, [field, updateCells]);
+
+  useEffect(() => {
+    fetchField();
+  }, [fetchField]);
+
 
   const changeCellColor = (id) => {
     let newCells = [...cells];
@@ -36,28 +54,13 @@ const PlaygroundWrapper = () => {
   
   const updateHoveredCells = (id) => {
     let newHoveredCells = [...hoveredCells];
-    newHoveredCells.push(id);
+    const uniqueId = nanoid();
+    newHoveredCells.push({uniqueId, id});
     setHoveredCells(newHoveredCells);
   };
 
-  const fetchField = async (mode='easyMode') => {
-    const response = await get();
-    if (response.isSuccess) {
-      const newField = response.payload.data[mode].field;
-      setField(newField);
-    } else {
-      setError(response.payload)
-    }
-  };
-
-  const updateCells = () => {
-    const newCells = new Array(field*field).fill(0);
-    setCells(newCells);
-    setHoveredCells([]);
-  };
-
-
   const handleFormSubmit = async (mode) => {
+    updateCells();
     await fetchField(mode);
   };
 

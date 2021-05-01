@@ -19,8 +19,8 @@ const ModePicker = ({ handleFormSubmit }) => {
   return (
     <form onSubmit={handleSubmit}>
       <div className='selectWrapper'>
-      <select className='modePicker' onChange={handleChange} id="mode" name="mode">
-        <option value="" disabled selected>Pick mode</option>
+      <select defaultValue="" className='modePicker' onChange={handleChange} id="mode" name="mode">
+        <option value="" disabled>Pick mode</option>
         <option value="easyMode">Easy</option>
         <option value="normalMode">Normal</option>
         <option value="hardMode">Hard</option>
