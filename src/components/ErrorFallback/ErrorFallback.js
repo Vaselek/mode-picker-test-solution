@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ErrorFallback = ({ error }) => {
+const ErrorFallback = ({error}) => {
   return (
     <div>
       <p>Something went wrong:</p>

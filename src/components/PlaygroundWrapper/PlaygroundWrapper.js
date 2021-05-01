@@ -4,7 +4,8 @@ import Playground from "../Playground/Playground";
 import { get } from '../../api/httpRequests';
 import HoverDisplay from "../HoverDisplay/HoverDisplay";
 import './PlaygroundWrapper.css';
-import ErrorFallback from "../ErrorFallback/ErrorFallback";
+import {useErrorHandler} from "react-error-boundary";
+
 
 const PlaygroundWrapper = () => {
 
@@ -12,6 +13,10 @@ const PlaygroundWrapper = () => {
   const [cells, setCells] = useState([]);
   const [hoveredCells, setHoveredCells] = useState([]);
   const [error, setError] = useState(null);
+
+  const handleError  = useErrorHandler();
+
+  if (error) handleError(error);
 
   useEffect(async () => {
     updateCells();
@@ -56,7 +61,6 @@ const PlaygroundWrapper = () => {
     await fetchField(mode);
   };
 
-  if (error) return <ErrorFallback error={error}/>
 
   return (
     <div className='playgroundWrapper'>
