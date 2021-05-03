@@ -61,7 +61,6 @@ const PlaygroundWrapper = () => {
   };
 
   const handleFormSubmit = async (mode) => {
-    console.log('sjlfjsljdfs--------------------sjdljlfjsljdlfdjlj---------------', mode)
     updateCells();
     await fetchField(mode);
   };
